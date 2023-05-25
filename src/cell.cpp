@@ -9,7 +9,7 @@ void Cell::collide(Cell& other)
     if (distance(position, otherPos) < totalRadius)
     {
         Vec2f temp(position.x, position.y);
-        driveAway(position, otherPos, totalRadius-distance(position, otherPos));
+        driveAway(position, otherPos, totalRadius-distance(position, otherPos), ((float)radius)/((float)totalRadius));
     }
 }
 

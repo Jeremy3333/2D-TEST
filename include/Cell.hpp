@@ -1,6 +1,7 @@
 #pragma once
 #include "Vec2f.hpp"
 #include "Utils.hpp"
+#include "Food.hpp"
 #include <vector>
 
 class Cell

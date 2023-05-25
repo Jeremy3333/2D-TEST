@@ -56,4 +56,4 @@ bool operator!=(const Vec2f& a, const Vec2f& b);
 float dot(const Vec2f& a, const Vec2f& b);
 float distance(const Vec2f& a, const Vec2f& b);
 Vec2f normalize(const Vec2f& a);
-void driveAway(Vec2f& a,  Vec2f& b, float distance);
+void driveAway(Vec2f& a,  Vec2f& b, float distance, float rate);
