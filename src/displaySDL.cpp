@@ -38,6 +38,11 @@ void draw(SDL_Renderer *renderer, World world)
     {
         DrawCircle(renderer, world.cells[i].getPos().x, world.cells[i].getPos().y, world.cells[i].getRadius());
     }
+    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+    for (int i = 0; i < world.foods.size(); i++)
+    {
+        DrawCircle(renderer, world.foods[i].getPos().x, world.foods[i].getPos().y, 5);
+    }
     SDL_RenderPresent(renderer);
 }
 

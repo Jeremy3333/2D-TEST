@@ -1,9 +1,17 @@
 #include "World.hpp"
+#include <random>
 
 World::World()
 {
-    cells.push_back(Cell(Vec2f(100, 90), 30, 100, CELL_SIZE));
-    cells.push_back(Cell(Vec2f(60, 100), 30, 100, CELL_SIZE));
+    srand(time(NULL));
+    for(int i = 0; i < 3; i++)
+    {
+        cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), 10, 10, ((rand() % 2) + 1) * CELL_SIZE));
+    }
+    for(int i = 0; i < 10; i++)
+    {
+        foods.push_back(Food(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT)));
+    }
 }
 
 World::~World()
