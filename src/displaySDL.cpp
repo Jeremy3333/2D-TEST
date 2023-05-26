@@ -56,27 +56,24 @@ void drawCells(SDL_Renderer *renderer, std::vector<Cell> cells)
 void drawHUD(SDL_Renderer *renderer, World world, TTF_Font *robotoBlack)
 {
     SDL_Color white = {255, 255, 255, 255};
-    std::string meanRadius = "Mean Radius: " + std::to_string(world.meanRadius);
-    std::string meanSpeed = "Mean Speed: " + std::to_string(world.meanSpeed);
-    SDL_Surface *surface = TTF_RenderText_Solid(robotoBlack, meanRadius.c_str(), white);
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_Rect rect;
-    rect.x = 0;
-    rect.y = 0;
-    // rect.w = surface->w;
-    // rect.h = surface->h;
-    // SDL_RenderCopy(renderer, texture, NULL, &rect);
-    // SDL_FreeSurface(surface);
-    // SDL_DestroyTexture(texture);
-    // surface = TTF_RenderText_Solid(robotoBlack, meanSpeed.c_str(), white);
-    // texture = SDL_CreateTextureFromSurface(renderer, surface);
-    // rect.x = 0;
-    // rect.y = 20;
-    // rect.w = surface->w;
-    // rect.h = surface->h;
-    // SDL_RenderCopy(renderer, texture, NULL, &rect);
-    SDL_FreeSurface(surface);
-    SDL_DestroyTexture(texture);
+    SDL_Surface *surfaceMessage = TTF_RenderText_Solid(robotoBlack, ("Mean Radius: " + std::to_string(world.meanRadius)).c_str(), white);
+    SDL_Texture *Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+    SDL_Rect Message_rect;
+    Message_rect.x = 0;
+    Message_rect.y = 0;
+    Message_rect.w = surfaceMessage->w;
+    Message_rect.h = surfaceMessage->h;
+    SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
+    SDL_DestroyTexture(Message);
+
+    surfaceMessage = TTF_RenderText_Solid(robotoBlack, ("Mean Speed: " + std::to_string(world.meanSpeed)).c_str(), white);
+    Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+    Message_rect.x = 0;
+    Message_rect.y = Message_rect.h + 5;
+    Message_rect.w = surfaceMessage->w;
+    Message_rect.h = surfaceMessage->h;
+    SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
+    SDL_DestroyTexture(Message);
 }
 
 void draw(SDL_Renderer *renderer, World world, TTF_Font *robotoBlack)
@@ -112,6 +109,7 @@ void SDLLoop(World world, SDL_Window *window, SDL_Renderer *renderer, SDL_Event 
 void SDL()
 {
     SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
     World world;
     SDL_Window *window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
