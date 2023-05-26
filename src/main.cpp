@@ -2,6 +2,6 @@
 
 int main(int argc, char **argv)
 {
-    SDLLoop();
+    SDL();
     return 0;
 }

@@ -62,6 +62,6 @@ void driveAway(Vec2f& vec1,  Vec2f& vec2, float distance, float rate)
     Vec2f dist = vec1 - vec2;
     Vec2f norm = normalize(dist);
     Vec2f force = norm * distance;
-    vec1 = vec1 + force * rate;
-    vec2 = vec2 - force * (1 - rate);
+    vec1 = vec1 + force * (1 - rate);
+    vec2 = vec2 - force * rate;
 }

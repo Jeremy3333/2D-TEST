@@ -4,4 +4,4 @@
 #include "Utils.hpp"
 #include "World.hpp"
 
-void SDLLoop();
+void SDL();
