@@ -27,19 +27,60 @@ void Cell::setPos(const Vec2f& position)
     this->position = position;
 }
 
+int Cell::getSpeed() const
+{
+    return speed;
+}
+
+int Cell::getEnergy() const
+{
+    return energy;
+}
+
 int Cell::getRadius() const
 {
     return radius;
 }
 
-void Cell::update(float dt, Vec2f target, std::vector<Cell> cells, int id)
+void Cell::update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<Food> &foods, int id)
 {
     position = position + normalize(target - position) * speed * dt;
+    Timer += dt;
     for(int i = 0; i < cells.size(); i++)
     {
         if(i != id)
         {
             collide(cells[i]);
         }
+    }
+    for(int i = 0; i < foods.size(); i++)
+    {
+        if(distance(position, foods[i].getPos()) < radius)
+        {
+            energy += FOOD_ENERGY;
+            foods.erase(foods.begin() + i);
+        }
+    }
+    if(Timer >= 1)
+    {
+        energy--;
+        Timer = 0;
+    }
+    if(energy >= CHILDBIRTH_ENERGY)
+    {
+        energy -= BIRTH_ENERGY;
+        int childSpeed = this->speed;
+        int childRadius = this->radius;
+        int childX = position.x + ((rand() % 10) - 5);
+        int childY = position.y + ((rand() % 10) - 5);
+        if(rand() % 100 < 20)
+        {
+            childSpeed += ((rand() % 10) - 5);
+        }
+        if(rand() % 100 < 20)
+        {
+            childRadius += ((rand() % 10) - 5);
+        }
+        cells.push_back(Cell(Vec2f(childX, childY), childSpeed, BIRTH_ENERGY, childRadius));
     }
 }

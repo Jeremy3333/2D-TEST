@@ -20,9 +20,13 @@ public:
     Vec2f getPos() const;
     void setPos(const Vec2f& position);
 
+    int getSpeed() const;
+
+    int getEnergy() const;
+
     int getRadius() const;
 
-    void update(float dt, Vec2f target, std::vector<Cell> cells, int id);
+    void update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<Food> &foods, int id);
 
     ~Cell();
 };
