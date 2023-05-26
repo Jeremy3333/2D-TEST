@@ -12,6 +12,7 @@ public:
     std::vector<Food> foods;
     float meanRadius;
     float meanSpeed;
+    float TimerFood;
     World();
     ~World();
     void Update(float dt);

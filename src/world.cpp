@@ -1,17 +1,21 @@
 #include "World.hpp"
 #include <random>
+#include <iostream>
 
 World::World()
 {
     srand(time(NULL));
     for(int i = 0; i < 3; i++)
     {
-        cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), 30, 20,  CELL_SIZE + ((rand() % 10) - 5)));
+        cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), CELL_SPEED, 20,  CELL_SIZE + ((rand() % 10) - 5)));
     }
     for(int i = 0; i < 10; i++)
     {
         foods.push_back(Food(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT)));
     }
+    meanRadius = 0;
+    meanSpeed = 0;
+    TimerFood = 0;
 }
 
 World::~World()
@@ -21,8 +25,11 @@ World::~World()
 
 void World::Update(float dt)
 {
-    float meanRadius = 0;
-    float meanSpeed = 0;
+    meanRadius = 0;
+    meanSpeed = 0;
+    TimerFood += dt;
+    Vec2f NewFoodPos = Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT);
+    bool NewFood = true;
     for(int i = 0; i < cells.size(); i++)
     {
         float dist = distance(cells[i].getPos(), foods[0].getPos());
@@ -42,11 +49,17 @@ void World::Update(float dt)
         }
         meanRadius += cells[i].getRadius();
         meanSpeed += cells[i].getSpeed();
+        if (distance(cells[i].getPos(), NewFoodPos) < cells[i].getRadius())
+        {
+            NewFood = false;
+        }
     }
     meanRadius /= cells.size();
     meanSpeed /= cells.size();
-    if(foods.size() < 10)
+    if(TimerFood > 1 && NewFood)
     {
-        foods.push_back(Food(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT)));
+        TimerFood = 0;
+        if((rand() % 100 < FOOD_SPAWN_RATE))
+            foods.push_back(Food(NewFoodPos));
     }
 }

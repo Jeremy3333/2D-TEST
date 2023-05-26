@@ -63,6 +63,7 @@ void drawHUD(SDL_Renderer *renderer, World world, TTF_Font *robotoBlack)
     Message_rect.y = 0;
     Message_rect.w = surfaceMessage->w;
     Message_rect.h = surfaceMessage->h;
+    SDL_FreeSurface(surfaceMessage);
     SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
     SDL_DestroyTexture(Message);
 
@@ -72,6 +73,17 @@ void drawHUD(SDL_Renderer *renderer, World world, TTF_Font *robotoBlack)
     Message_rect.y = Message_rect.h + 5;
     Message_rect.w = surfaceMessage->w;
     Message_rect.h = surfaceMessage->h;
+    SDL_FreeSurface(surfaceMessage);
+    SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
+    SDL_DestroyTexture(Message);
+
+    surfaceMessage = TTF_RenderText_Solid(robotoBlack, ("Number of cells: " + std::to_string(world.cells.size())).c_str(), white);
+    Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+    Message_rect.x = 0;
+    Message_rect.y = Message_rect.h * 2 + 10;
+    Message_rect.w = surfaceMessage->w;
+    Message_rect.h = surfaceMessage->h;
+    SDL_FreeSurface(surfaceMessage);
     SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
     SDL_DestroyTexture(Message);
 }
@@ -114,7 +126,7 @@ void SDL()
     SDL_Window *window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_Event event;
-    TTF_Font *robotoBlack = TTF_OpenFont("media/ttf/roboto/Roboto-Black.ttf", 25);
+    TTF_Font *robotoBlack = TTF_OpenFont("media/ttf/roboto/Roboto-Black.ttf", 15);
     float dt = 60.0f/1000.0f;
     SDLLoop(world, window, renderer, event, dt, robotoBlack);
     SDL_DestroyRenderer(renderer);

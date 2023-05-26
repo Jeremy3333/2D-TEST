@@ -55,7 +55,7 @@ void Cell::update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<
     }
     for(int i = 0; i < foods.size(); i++)
     {
-        if(distance(position, foods[i].getPos()) < radius)
+        if(distance(position, foods[i].getPos()) < radius + FOOD_SIZE)
         {
             energy += FOOD_ENERGY;
             foods.erase(foods.begin() + i);
@@ -63,7 +63,7 @@ void Cell::update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<
     }
     if(Timer >= 1)
     {
-        energy--;
+        energy -= (speed/CELL_SPEED)*(CELL_SPEED_ENERGY_COST)+(radius/CELL_SIZE)*(CELL_SIZE_ENERGY_COST);
         Timer = 0;
     }
     if(energy >= CHILDBIRTH_ENERGY)
@@ -73,11 +73,11 @@ void Cell::update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<
         int childRadius = this->radius;
         int childX = position.x + ((rand() % 10) - 5);
         int childY = position.y + ((rand() % 10) - 5);
-        if(rand() % 100 < 20)
+        if(rand() % 100 < MUTATION_CHANCE)
         {
             childSpeed += ((rand() % 10) - 5);
         }
-        if(rand() % 100 < 20)
+        if(rand() % 100 < MUTATION_CHANCE)
         {
             childRadius += ((rand() % 10) - 5);
         }
