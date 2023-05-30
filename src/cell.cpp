@@ -13,7 +13,9 @@ void Cell::collide(Cell& other)
     }
 }
 
-Cell::Cell(Vec2f position, float speed, int energy, int radius): position(position), speed(speed), Timer(0), energy(energy), radius(radius) {}
+Cell::Cell(Vec2f position, float speed, int energy, int radius): position(position), speed(speed), Timer(0), energy(energy), radius(radius), brainMove() {}
+
+Cell::Cell(Vec2f position, float speed, int energy, int radius,const Neural &Heredity): position(position), speed(speed), Timer(0), energy(energy), radius(radius), brainMove(Heredity) {}
 
 Cell::~Cell() {}
 
@@ -44,7 +46,26 @@ int Cell::getRadius() const
 
 void Cell::update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<Food> &foods, int id)
 {
-    position = position + normalize(target - position) * speed * dt;
+    Vec2f input = target - position;
+    float input1[2] = {input.x, input.y};
+    float output[2];
+    brainMove.Solve(input1, output);
+    if(output[0] > 0)
+        position.x += speed * dt;
+    else if(output[0] < 0)
+        position.x -= speed * dt;
+    if(output[1] > 0)
+        position.y += speed * dt;
+    else if(output[1] < 0)
+        position.y -= speed * dt;
+    if(position.x - radius < 0)
+        position.x = radius;
+    if(position.x + radius > WINDOW_WIDTH)
+        position.x = WINDOW_WIDTH - radius;
+    if(position.y - radius < 0)
+        position.y = radius;
+    if(position.y + radius > WINDOW_HEIGHT)
+        position.y = WINDOW_HEIGHT - radius;
     Timer += dt;
     for(int i = 0; i < cells.size(); i++)
     {
@@ -81,6 +102,6 @@ void Cell::update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<
         {
             childRadius += ((rand() % 10) - 5);
         }
-        cells.push_back(Cell(Vec2f(childX, childY), childSpeed, BIRTH_ENERGY, childRadius));
+        cells.push_back(Cell(Vec2f(childX, childY), childSpeed, BIRTH_ENERGY, childRadius, brainMove));
     }
 }
