@@ -3,6 +3,9 @@
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 780
 
+//world
+#define CELL_NUMBER 25
+
 //cell
 #define CELL_SIZE 10
 #define CELL_SIZE_ENERGY_COST 0.5
@@ -10,7 +13,7 @@
 #define CELL_SPEED_ENERGY_COST 0.5
 #define CHILDBIRTH_ENERGY 30
 #define BIRTH_ENERGY 20
-#define MUTATION_CHANCE 20
+#define MUTATION_CHANCE 5
 
 //food
 #define FOOD_SIZE 5
@@ -18,4 +21,4 @@
 #define FOOD_SPAWN_RATE 50
 
 //brain
-#define BRAIN_MUTATION_CHANCE 10
+#define BRAIN_MUTATION_CHANCE 1

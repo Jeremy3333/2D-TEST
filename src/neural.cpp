@@ -10,7 +10,7 @@ float Sigmoid(float x)
 
 float ReLU(float x)
 {
-    return x ;
+    return x;
 }
 
 Neural::Neural()

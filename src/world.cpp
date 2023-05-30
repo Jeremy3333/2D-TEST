@@ -5,7 +5,7 @@
 World::World()
 {
     srand(time(NULL));
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < CELL_NUMBER; i++)
     {
         cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), CELL_SPEED, 20,  CELL_SIZE + ((rand() % 10) - 5)));
     }
@@ -65,7 +65,7 @@ void World::Update(float dt)
     if(cells.size () == 0)
     {
         foods.clear();
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < CELL_NUMBER; i++)
         {
             cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), CELL_SPEED, 20,  CELL_SIZE + ((rand() % 10) - 5)));
         }
