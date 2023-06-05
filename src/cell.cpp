@@ -13,9 +13,9 @@ void Cell::collide(Cell& other)
     }
 }
 
-Cell::Cell(Vec2f position, float speed, int energy, int radius): position(position), speed(speed), Timer(0), energy(energy), radius(radius), brainMove() {}
+Cell::Cell(Vec2f position, float speed, int energy, int radius): position(position), velocity(), speed(speed), Timer(0), energy(energy), radius(radius), brainMove() {}
 
-Cell::Cell(Vec2f position, float speed, int energy, int radius,const Neural &Heredity): position(position), speed(speed), Timer(0), energy(energy), radius(radius), brainMove(Heredity) {}
+Cell::Cell(Vec2f position, float speed, int energy, int radius,const Neural &Heredity): position(position), velocity(), speed(speed), Timer(0), energy(energy), radius(radius), brainMove(Heredity) {}
 
 Cell::~Cell() {}
 
@@ -27,6 +27,11 @@ Vec2f Cell::getPos() const
 void Cell::setPos(const Vec2f& position)
 {
     this->position = position;
+}
+
+Vec2f Cell::getVelocity() const
+{
+    return velocity;
 }
 
 int Cell::getSpeed() const
@@ -51,13 +56,15 @@ void Cell::update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<
     float output[2];
     brainMove.Solve(input1, output);
     if(output[0] > 0)
-        position.x += speed * dt;
+        velocity.x += speed * dt;
     else if(output[0] < 0)
-        position.x -= speed * dt;
+        velocity.x -= speed * dt;
     if(output[1] > 0)
-        position.y += speed * dt;
+        velocity.y += speed * dt;
     else if(output[1] < 0)
-        position.y -= speed * dt;
+        velocity.y -= speed * dt;
+    velocity *= CELL_FRICTION;
+    position += velocity * dt;
     if(position.x - radius < 0)
         position.x = radius;
     if(position.x + radius > WINDOW_WIDTH)
@@ -84,7 +91,7 @@ void Cell::update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<
     }
     if(Timer >= 1)
     {
-        energy -= (speed/CELL_SPEED)*(CELL_SPEED_ENERGY_COST)+(radius/CELL_SIZE)*(CELL_SIZE_ENERGY_COST);
+        energy -= ((speed/CELL_SPEED)*(CELL_SPEED_ENERGY_COST))+((radius/CELL_SIZE)*(CELL_SIZE_ENERGY_COST));
         Timer = 0;
     }
     if(energy >= CHILDBIRTH_ENERGY)
@@ -92,8 +99,8 @@ void Cell::update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<
         energy -= BIRTH_ENERGY;
         int childSpeed = this->speed;
         int childRadius = this->radius;
-        int childX = position.x + ((rand() % 10) - 5);
-        int childY = position.y + ((rand() % 10) - 5);
+        int childX = rand() % WINDOW_WIDTH;
+        int childY = rand() % WINDOW_HEIGHT;
         if(rand() % 100 < MUTATION_CHANCE)
         {
             childSpeed += ((rand() % 10) - 5);
@@ -102,6 +109,10 @@ void Cell::update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<
         {
             childRadius += ((rand() % 10) - 5);
         }
+        if(childSpeed < 5)
+            childSpeed = 5;
+        if(childRadius < 1)
+            childRadius = 1;
         cells.push_back(Cell(Vec2f(childX, childY), childSpeed, BIRTH_ENERGY, childRadius, brainMove));
     }
 }

@@ -10,9 +10,8 @@ float Sigmoid(float x)
 
 float ReLU(float x)
 {
-    return x;
+    return x > 0 ? x : 0;
 }
-
 Neural::Neural()
 {
     for(int i = 0; i < 2; i++)
@@ -136,25 +135,25 @@ void Neural::Solve(float Input[2], float Output[2])
             HiddenLayerResult[0][i] += Input[j] * WeightsIL_HL1[i][j];
         }
         HiddenLayerResult[0][i] += HiddenLayerBias[0][i];
-        HiddenLayerResult[0][i] = Sigmoid(HiddenLayerResult[0][i]);
+        HiddenLayerResult[0][i] = ReLU(HiddenLayerResult[0][i]);
     }
     for(int i = 0; i < 4; i++)// result of HiddenLayer 2
     {
         HiddenLayerResult[1][i] = 0;
         for(int j = 0; j < 4; j++)
         {
-            HiddenLayerResult[1][i] += ReLU(HiddenLayerResult[0][j]) * WeightsHL1_HL2[i][j];
+            HiddenLayerResult[1][i] += HiddenLayerResult[0][j] * WeightsHL1_HL2[i][j];
         }
         HiddenLayerResult[1][i] += HiddenLayerBias[1][i];
-        HiddenLayerResult[1][i] = Sigmoid(HiddenLayerResult[1][i]);
+        HiddenLayerResult[1][i] = ReLU(HiddenLayerResult[1][i]);
     }
     for(int i = 0; i < 2; i++)// result of OutputLayer
     {
         Output[i] = 0;
         for(int j = 0; j < 4; j++)
         {
-            Output[i] += ReLU(HiddenLayerResult[1][j]) * WeightsHL2_OL[i][j];
+            Output[i] += HiddenLayerResult[1][j] * WeightsHL2_OL[i][j];
         }
-        Output[i] = Sigmoid(Output[i]);
+        Output[i] = Output[i];
     }
 }

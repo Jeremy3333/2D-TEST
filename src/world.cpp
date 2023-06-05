@@ -9,7 +9,7 @@ World::World()
     {
         cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), CELL_SPEED, 20,  CELL_SIZE + ((rand() % 10) - 5)));
     }
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < FOOD_NUMBER; i++)
     {
         foods.push_back(Food(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT)));
     }
@@ -69,9 +69,10 @@ void World::Update(float dt)
         {
             cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), CELL_SPEED, 20,  CELL_SIZE + ((rand() % 10) - 5)));
         }
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < FOOD_NUMBER; i++)
         {
             foods.push_back(Food(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT)));
         }
+        std::cout << "Reload" << std::endl;
     }
 }

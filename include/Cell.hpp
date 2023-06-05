@@ -9,6 +9,7 @@ class Cell
 {
 private:
     Vec2f position;
+    Vec2f velocity;
     float speed;
     float Timer;
     int energy;
@@ -23,6 +24,8 @@ public:
 
     Vec2f getPos() const;
     void setPos(const Vec2f& position);
+
+    Vec2f getVelocity() const;
 
     int getSpeed() const;
 
