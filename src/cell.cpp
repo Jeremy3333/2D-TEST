@@ -15,7 +15,7 @@ void Cell::collide(Cell& other)
 
 Cell::Cell(Vec2f position, float speed, int energy, int radius): position(position), velocity(), speed(speed), Timer(0), energy(energy), radius(radius), brainMove() {}
 
-Cell::Cell(Vec2f position, float speed, int energy, int radius,const Neural &Heredity): position(position), velocity(), speed(speed), Timer(0), energy(energy), radius(radius), brainMove(Heredity) {}
+Cell::Cell(Vec2f position, float speed, int energy, int radius, const Neural &Heredity): position(position), velocity(), speed(speed), Timer(0), energy(energy), radius(radius), brainMove(Heredity) {}
 
 Cell::~Cell() {}
 
@@ -52,7 +52,7 @@ int Cell::getRadius() const
 void Cell::update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<Food> &foods, int id)
 {
     Vec2f input = target - position;
-    float input1[2] = {input.x, input.y};
+    float input1[4] = {input.x, input.y, velocity.x, velocity.y};
     float output[2];
     brainMove.Solve(input1, output);
     if(output[0] > 0)
@@ -99,8 +99,8 @@ void Cell::update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<
         energy -= BIRTH_ENERGY;
         int childSpeed = this->speed;
         int childRadius = this->radius;
-        int childX = rand() % WINDOW_WIDTH;
-        int childY = rand() % WINDOW_HEIGHT;
+        int childX = position.x + (rand() % 20) - 10;
+        int childY = position.y + (rand() % 20) - 10;
         if(rand() % 100 < MUTATION_CHANCE)
         {
             childSpeed += ((rand() % 10) - 5);
