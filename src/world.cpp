@@ -7,7 +7,7 @@ World::World()
     srand(time(NULL));
     for(int i = 0; i < CELL_NUMBER; i++)
     {
-        cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), CELL_SPEED, 20,  CELL_SIZE + ((rand() % 10) - 5)));
+        cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), Color(rand() % 255, rand() % 255, rand() % 255, 225), CELL_SPEED, 20,  CELL_SIZE + ((rand() % 10) - 5)));
     }
     for(int i = 0; i < FOOD_NUMBER; i++)
     {
@@ -67,7 +67,7 @@ void World::Update(float dt)
         foods.clear();
         for(int i = 0; i < CELL_NUMBER; i++)
         {
-            cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), CELL_SPEED, 20,  CELL_SIZE + ((rand() % 10) - 5)));
+            cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), Color(rand() % 255, rand() % 255, rand() % 255, 225), CELL_SPEED, 20,  CELL_SIZE + ((rand() % 10) - 5)));
         }
         for(int i = 0; i < FOOD_NUMBER; i++)
         {

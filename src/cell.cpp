@@ -13,9 +13,9 @@ void Cell::collide(Cell& other)
     }
 }
 
-Cell::Cell(Vec2f position, float speed, int energy, int radius): position(position), velocity(), speed(speed), Timer(0), energy(energy), radius(radius), brainMove() {}
+Cell::Cell(Vec2f position, Color color, float speed, int energy, int radius): position(position), velocity(), color(color), speed(speed), Timer(0), energy(energy), radius(radius), brainMove() {}
 
-Cell::Cell(Vec2f position, float speed, int energy, int radius, const Neural &Heredity): position(position), velocity(), speed(speed), Timer(0), energy(energy), radius(radius), brainMove(Heredity) {}
+Cell::Cell(Vec2f position, Color color, float speed, int energy, int radius, const Neural &Heredity): position(position), velocity(), color(color), speed(speed), Timer(0), energy(energy), radius(radius), brainMove(Heredity) {}
 
 Cell::~Cell() {}
 
@@ -32,6 +32,11 @@ void Cell::setPos(const Vec2f& position)
 Vec2f Cell::getVelocity() const
 {
     return velocity;
+}
+
+Color Cell::getColor() const
+{
+    return color;
 }
 
 int Cell::getSpeed() const
@@ -99,20 +104,39 @@ void Cell::update(float dt, Vec2f target, std::vector<Cell> &cells, std::vector<
         energy -= BIRTH_ENERGY;
         int childSpeed = this->speed;
         int childRadius = this->radius;
+        Color childColor = this->color;
         int childX = position.x + (rand() % 20) - 10;
         int childY = position.y + (rand() % 20) - 10;
-        if(rand() % 100 < MUTATION_CHANCE)
+        if(rand() % 100 < CELL_SPEED_MUTATION_CHANCE)
         {
             childSpeed += ((rand() % 10) - 5);
         }
-        if(rand() % 100 < MUTATION_CHANCE)
+        if(rand() % 100 < CELL_SIZE_MUTATION_CHANCE)
         {
             childRadius += ((rand() % 10) - 5);
+        }
+        if(rand() % 100 < CELL_COLOR_MUTATION_CHANCE)
+        {
+            childColor.r += ((rand() % 100) - 50);
+            childColor.g += ((rand() % 100) - 50);
+            childColor.b += ((rand() % 100) - 50);
         }
         if(childSpeed < 5)
             childSpeed = 5;
         if(childRadius < 1)
             childRadius = 1;
-        cells.push_back(Cell(Vec2f(childX, childY), childSpeed, BIRTH_ENERGY, childRadius, brainMove));
+        if(childColor.r < 0)
+            childColor.r = 0;
+        if(childColor.g < 0)
+            childColor.g = 0;
+        if(childColor.b < 0)
+            childColor.b = 0;
+        if(childColor.r > 255)
+            childColor.r = 255;
+        if(childColor.g > 255)
+            childColor.g = 255;
+        if(childColor.b > 255)
+            childColor.b = 255;
+        cells.push_back(Cell(Vec2f(childX, childY), childColor, childSpeed, BIRTH_ENERGY, childRadius, brainMove));
     }
 }

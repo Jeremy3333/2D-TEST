@@ -48,7 +48,9 @@ void drawCells(SDL_Renderer *renderer, std::vector<Cell> cells)
 {
     for (int i = 0; i < cells.size(); i++)
     {
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        // draw the cell as a circle
+        Color color = cells[i].getColor();
+        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         DrawCircle(renderer, cells[i].getPos().x, cells[i].getPos().y, cells[i].getRadius());
         // draw there velocity as a cyan line
         SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
