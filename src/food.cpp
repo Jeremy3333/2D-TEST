@@ -2,7 +2,7 @@
 #include "Utils.hpp"
 #include <random>
 
-Food::Food(Vec2f p_pos): position(p_pos) {}
+Food::Food(Vec2f p_pos) : position(p_pos) {}
 
 Vec2f Food::getPos() const
 {

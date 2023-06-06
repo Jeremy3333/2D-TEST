@@ -16,7 +16,7 @@ private:
     float Timer;
     int energy;
     int radius;
-    void collide(Cell& other);
+    void collide(Cell &other);
     Neural brainMove;
 
 public:
@@ -25,7 +25,7 @@ public:
     Cell(Vec2f position, Color color, float speed, int energy, int radius, const Neural &Heredity);
 
     Vec2f getPos() const;
-    void setPos(const Vec2f& position);
+    void setPos(const Vec2f &position);
 
     Vec2f getVelocity() const;
 

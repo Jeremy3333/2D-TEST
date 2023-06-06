@@ -5,11 +5,11 @@
 World::World()
 {
     srand(time(NULL));
-    for(int i = 0; i < CELL_NUMBER; i++)
+    for (int i = 0; i < CELL_NUMBER; i++)
     {
-        cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), Color(rand() % 255, rand() % 255, rand() % 255, 225), CELL_SPEED, 20,  CELL_SIZE + ((rand() % 10) - 5)));
+        cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), Color(rand() % 255, rand() % 255, rand() % 255, 225), CELL_SPEED, 20, CELL_SIZE + ((rand() % 10) - 5)));
     }
-    for(int i = 0; i < FOOD_NUMBER; i++)
+    for (int i = 0; i < FOOD_NUMBER; i++)
     {
         foods.push_back(Food(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT)));
     }
@@ -30,20 +30,20 @@ void World::Update(float dt)
     TimerFood += dt;
     Vec2f NewFoodPos = Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT);
     bool NewFood = true;
-    for(int i = 0; i < cells.size(); i++)
+    for (int i = 0; i < cells.size(); i++)
     {
         float dist = distance(cells[i].getPos(), foods[0].getPos());
         int index = 0;
-        for(int j = 1; j < foods.size(); j++)
+        for (int j = 1; j < foods.size(); j++)
         {
-            if(distance(cells[i].getPos(), foods[j].getPos()) < dist)
+            if (distance(cells[i].getPos(), foods[j].getPos()) < dist)
             {
                 dist = distance(cells[i].getPos(), foods[j].getPos());
                 index = j;
             }
         }
         cells[i].update(dt, foods[index].getPos(), cells, foods, i);
-        if(cells[i].getEnergy() <= 0)
+        if (cells[i].getEnergy() <= 0)
         {
             cells.erase(cells.begin() + i);
         }
@@ -56,20 +56,20 @@ void World::Update(float dt)
     }
     meanRadius /= cells.size();
     meanSpeed /= cells.size();
-    if(TimerFood > 1 && NewFood)
+    if (TimerFood > 1 && NewFood)
     {
         TimerFood = 0;
-        if((rand() % 100 < FOOD_SPAWN_RATE))
+        if ((rand() % 100 < FOOD_SPAWN_RATE))
             foods.push_back(Food(NewFoodPos));
     }
-    if(cells.size () == 0)
+    if (cells.size() == 0)
     {
         foods.clear();
-        for(int i = 0; i < CELL_NUMBER; i++)
+        for (int i = 0; i < CELL_NUMBER; i++)
         {
-            cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), Color(rand() % 255, rand() % 255, rand() % 255, 225), CELL_SPEED, 20,  CELL_SIZE + ((rand() % 10) - 5)));
+            cells.push_back(Cell(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT), Color(rand() % 255, rand() % 255, rand() % 255, 225), CELL_SPEED, 20, CELL_SIZE + ((rand() % 10) - 5)));
         }
-        for(int i = 0; i < FOOD_NUMBER; i++)
+        for (int i = 0; i < FOOD_NUMBER; i++)
         {
             foods.push_back(Food(Vec2f(rand() % WINDOW_WIDTH, rand() % WINDOW_HEIGHT)));
         }

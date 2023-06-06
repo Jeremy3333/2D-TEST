@@ -17,7 +17,6 @@ void DrawCircle(SDL_Renderer *renderer, int x, int y, int radius)
     }
 }
 
-
 void eventHandler(SDL_Event event, bool &quit)
 {
     while (SDL_PollEvent(&event))
@@ -104,9 +103,9 @@ void draw(SDL_Renderer *renderer, World world, TTF_Font *robotoBlack)
 
 void Delay(float start)
 {
-    if(SDL_GetTicks() - start < 1000.0f/60.0f)
+    if (SDL_GetTicks() - start < 1000.0f / 60.0f)
     {
-        SDL_Delay(1000.0f/60.0f - (SDL_GetTicks() - start));
+        SDL_Delay(1000.0f / 60.0f - (SDL_GetTicks() - start));
     }
 }
 
@@ -132,7 +131,7 @@ void SDL()
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_Event event;
     TTF_Font *robotoBlack = TTF_OpenFont("media/ttf/roboto/Roboto-Black.ttf", 15);
-    float dt = 60.0f/1000.0f;
+    float dt = 60.0f / 1000.0f;
     SDLLoop(world, window, renderer, event, dt, robotoBlack);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

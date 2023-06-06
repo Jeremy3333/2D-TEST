@@ -14,37 +14,37 @@ float ReLU(float x)
 }
 Neural::Neural()
 {
-    for(int i = 0; i < BRAIN_HIDDEN_LAYERS; i++)
+    for (int i = 0; i < BRAIN_HIDDEN_LAYERS; i++)
     {
-        for(int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
+        for (int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
         {
             HiddenLayerBias[i][j] = ((rand() % 20) - 10.0f);
         }
     }
-    for(int i = 0; i < BRAIN_HIDDEN_LAYERS; i++)
+    for (int i = 0; i < BRAIN_HIDDEN_LAYERS; i++)
     {
-        for(int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
+        for (int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
         {
             HiddenLayerResult[i][j] = 0;
         }
     }
-    for(int i = 0; i < BRAIN_HIDDEN_LAYER_SIZE; i++)
+    for (int i = 0; i < BRAIN_HIDDEN_LAYER_SIZE; i++)
     {
-        for(int j = 0; j < BRAIN_INPUTS; j++)
+        for (int j = 0; j < BRAIN_INPUTS; j++)
         {
             WeightsIL_HL1[i][j] = ((rand() % 200) - 100.0f) / 100.0f;
         }
     }
-    for(int i = 0; i < BRAIN_HIDDEN_LAYER_SIZE; i++)
+    for (int i = 0; i < BRAIN_HIDDEN_LAYER_SIZE; i++)
     {
-        for(int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
+        for (int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
         {
             WeightsHL1_HL2[i][j] = ((rand() % 200) - 100.0f) / 100.0f;
         }
     }
-    for(int i = 0; i < BRAIN_OUTPUTS; i++)
+    for (int i = 0; i < BRAIN_OUTPUTS; i++)
     {
-        for(int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
+        for (int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
         {
             WeightsHL2_OL[i][j] = ((rand() % 200) - 100.0f) / 100.0f;
         }
@@ -53,70 +53,70 @@ Neural::Neural()
 
 Neural::Neural(const Neural &Heredity)
 {
-    //Copy Heredity with some mutations
-    for(int i = 0; i < BRAIN_HIDDEN_LAYERS; i++)
+    // Copy Heredity with some mutations
+    for (int i = 0; i < BRAIN_HIDDEN_LAYERS; i++)
     {
-        for(int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
+        for (int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
         {
             HiddenLayerBias[i][j] = Heredity.HiddenLayerBias[i][j];
-            if(rand() % 100 < BRAIN_MUTATION_CHANCE)
+            if (rand() % 100 < BRAIN_MUTATION_CHANCE)
             {
                 HiddenLayerBias[i][j] += ((rand() % 20) - 10.0f);
-                if(HiddenLayerBias[i][j] > 10.0f)
+                if (HiddenLayerBias[i][j] > 10.0f)
                     HiddenLayerBias[i][j] = 10.0f;
-                else if(HiddenLayerBias[i][j] < -10.0f)
+                else if (HiddenLayerBias[i][j] < -10.0f)
                     HiddenLayerBias[i][j] = -10.0f;
             }
         }
     }
-    for(int i = 0; i < BRAIN_HIDDEN_LAYERS; i++)
+    for (int i = 0; i < BRAIN_HIDDEN_LAYERS; i++)
     {
-        for(int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
+        for (int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
         {
             HiddenLayerResult[i][j] = Heredity.HiddenLayerResult[i][j];
         }
     }
-    for(int i = 0; i < BRAIN_HIDDEN_LAYER_SIZE; i++)
+    for (int i = 0; i < BRAIN_HIDDEN_LAYER_SIZE; i++)
     {
-        for(int j = 0; j < 2; j++)
+        for (int j = 0; j < 2; j++)
         {
             WeightsIL_HL1[i][j] = Heredity.WeightsIL_HL1[i][j];
-            if(rand() % 100 < BRAIN_MUTATION_CHANCE)
+            if (rand() % 100 < BRAIN_MUTATION_CHANCE)
             {
                 WeightsIL_HL1[i][j] += ((rand() % 200) - 100.0f) / 100.0f;
-                if(WeightsIL_HL1[i][j] > 1.0f)
+                if (WeightsIL_HL1[i][j] > 1.0f)
                     WeightsIL_HL1[i][j] = 1.0f;
-                else if(WeightsIL_HL1[i][j] < -1.0f)
+                else if (WeightsIL_HL1[i][j] < -1.0f)
                     WeightsIL_HL1[i][j] = -1.0f;
             }
         }
     }
-    for(int i = 0; i < BRAIN_HIDDEN_LAYER_SIZE; i++)
+    for (int i = 0; i < BRAIN_HIDDEN_LAYER_SIZE; i++)
     {
-        for(int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
+        for (int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
         {
             WeightsHL1_HL2[i][j] = Heredity.WeightsHL1_HL2[i][j];
-            if(rand() % 100 < BRAIN_MUTATION_CHANCE)
+            if (rand() % 100 < BRAIN_MUTATION_CHANCE)
             {
                 WeightsHL1_HL2[i][j] += ((rand() % 200) - 100.0f) / 100.0f;
-                if(WeightsHL1_HL2[i][j] > 1.0f)
+                if (WeightsHL1_HL2[i][j] > 1.0f)
                     WeightsHL1_HL2[i][j] = 1.0f;
-                else if(WeightsHL1_HL2[i][j] < -1.0f)
+                else if (WeightsHL1_HL2[i][j] < -1.0f)
                     WeightsHL1_HL2[i][j] = -1.0f;
             }
         }
     }
-    for(int i = 0; i < BRAIN_OUTPUTS; i++)
+    for (int i = 0; i < BRAIN_OUTPUTS; i++)
     {
-        for(int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
+        for (int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
         {
             WeightsHL2_OL[i][j] = Heredity.WeightsHL2_OL[i][j];
-            if(rand() % 100 < BRAIN_MUTATION_CHANCE)
+            if (rand() % 100 < BRAIN_MUTATION_CHANCE)
             {
                 WeightsHL2_OL[i][j] += ((rand() % 200) - 100.0f) / 100.0f;
-                if(WeightsHL2_OL[i][j] > 1.0f)
+                if (WeightsHL2_OL[i][j] > 1.0f)
                     WeightsHL2_OL[i][j] = 1.0f;
-                else if(WeightsHL2_OL[i][j] < -1.0f)
+                else if (WeightsHL2_OL[i][j] < -1.0f)
                     WeightsHL2_OL[i][j] = -1.0f;
             }
         }
@@ -127,30 +127,30 @@ Neural::~Neural() {}
 
 void Neural::Solve(float Input[BRAIN_INPUTS], float Output[BRAIN_OUTPUTS])
 {
-    for(int i = 0; i < BRAIN_HIDDEN_LAYER_SIZE; i++)// result of HiddenLayer 1
+    for (int i = 0; i < BRAIN_HIDDEN_LAYER_SIZE; i++) // result of HiddenLayer 1
     {
         HiddenLayerResult[0][i] = 0;
-        for(int j = 0; j < BRAIN_INPUTS; j++)
+        for (int j = 0; j < BRAIN_INPUTS; j++)
         {
             HiddenLayerResult[0][i] += Input[j] * WeightsIL_HL1[i][j];
         }
         HiddenLayerResult[0][i] += HiddenLayerBias[0][i];
         HiddenLayerResult[0][i] = ReLU(HiddenLayerResult[0][i]);
     }
-    for(int i = 0; i < BRAIN_HIDDEN_LAYER_SIZE; i++)// result of HiddenLayer 2
+    for (int i = 0; i < BRAIN_HIDDEN_LAYER_SIZE; i++) // result of HiddenLayer 2
     {
         HiddenLayerResult[1][i] = 0;
-        for(int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
+        for (int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
         {
             HiddenLayerResult[1][i] += HiddenLayerResult[0][j] * WeightsHL1_HL2[i][j];
         }
         HiddenLayerResult[1][i] += HiddenLayerBias[1][i];
         HiddenLayerResult[1][i] = ReLU(HiddenLayerResult[1][i]);
     }
-    for(int i = 0; i < BRAIN_OUTPUTS; i++)// result of OutputLayer
+    for (int i = 0; i < BRAIN_OUTPUTS; i++) // result of OutputLayer
     {
         Output[i] = 0;
-        for(int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
+        for (int j = 0; j < BRAIN_HIDDEN_LAYER_SIZE; j++)
         {
             Output[i] += HiddenLayerResult[1][j] * WeightsHL2_OL[i][j];
         }

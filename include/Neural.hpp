@@ -9,6 +9,7 @@ private:
     float WeightsIL_HL1[BRAIN_HIDDEN_LAYER_SIZE][BRAIN_INPUTS];
     float WeightsHL1_HL2[BRAIN_HIDDEN_LAYER_SIZE][BRAIN_HIDDEN_LAYER_SIZE];
     float WeightsHL2_OL[BRAIN_OUTPUTS][BRAIN_HIDDEN_LAYER_SIZE];
+
 public:
     Neural();
     Neural(const Neural &Heredity);

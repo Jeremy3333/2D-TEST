@@ -12,5 +12,4 @@ public:
     Vec2f getPos() const;
 
     ~Food();
-
 };
